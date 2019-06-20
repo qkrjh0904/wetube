@@ -25,12 +25,23 @@ function handleProfile(req, res){
 */
 const handleProfile = (req, res) => res.send("You are on my profile.");
 
+const betweenHome = (req, res, next) => {
+    //next는 요청을 계속 처리할 수 있는 권한을 주는것
+    //연결을 다루는건 req, res, next가 있음
+    console.log("middleware");
+    next();
+};
+//이건 글로벌한 방식의 middleware임
+//만약 IP주소를 검사하는 middelware를 만들었다하면 이런식으로 차단도 가능함
+app.use(betweenHome);   
+
 // '/'은 main URL
 //main URL에 대한 요청(get)이 있으면 handleHome함수 호출
 app.get("/", handleHome);
 
 //main/profile에대한 요청에 있으면 handleProfile함수 홀출
 app.get("/profile", handleProfile);
+
 
 //4000번 포트를 listening 시작하면 handleListening 함수 호출
 app.listen(PORT, handleListening);  

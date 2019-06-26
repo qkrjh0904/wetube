@@ -5,9 +5,9 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
-import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import userRouter from "./routers/userRouter";
 
 const app = express();
 
@@ -24,4 +24,4 @@ app.use(routes.home, globalRouter);
 app.use(routes.users, userRouter);
 app.use(routes.videos, videoRouter);
 //누군가 내 파일을 immport할 때 app object를 주겠다는말임
-export default app; 
+export default app;

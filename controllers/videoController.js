@@ -1,4 +1,5 @@
 import { videos } from "../db";
+import routes from "../routes";
 
 // Global Router
 //render의 첫 번째 인자는 templete이고, 두 번째 인자는 템플릿에 추가할 정보가 담긴 객체임
@@ -11,7 +12,14 @@ export const search = (req, res) => {
 };
 
 // Video Router
-export const upload = (req, res) => res.render("upload", { pageTitle : 'Upload'});
+export const getUpload = (req, res) => res.render("upload", { pageTitle : 'Upload'});
+export const postUpload = (req, res) => {
+    const{
+        body:{file, title, description}
+    } = req;
+    res.redirect(routes.videoDetail(111));
+};
+
 export const videoDetail = (req, res) => res.render("videoDetail", { pageTitle : 'Video Detail'});
 export const editVideo = (req, res) => res.render("editVideo", { pageTitle : 'Edit Video'});
 export const deleteVideo = (req, res) => res.render("deleteVideo", { pageTitle : 'Delete Video'});

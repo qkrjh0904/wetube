@@ -15,10 +15,9 @@ mongoose.connect(
 const db = mongoose.connection;
 
 const handleOpen = () => console.log("✅  Connected to DB");
-const handleError = (error) => console.log("❌  Error on DB Connection");
+const handleError = (error) => console.log(`❌  Error on DB Connection: ${error}`);
 
-//한번만 실행됨
-db.once("open", handleOpen);
+db.once("open", handleOpen);    //한번만 실행됨
 db.on("error", handleError);
 
 //dotenv를 설치한 이유는 가끔 내가 어떤 부분을 숨겨놓고 싶을 수 있기 때문

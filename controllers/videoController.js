@@ -1,22 +1,37 @@
 import routes from "../routes";
+import Video from "../models/Video";
+import Comment from "../models/Comment";
 
 // Global Router
 //render의 첫 번째 인자는 templete이고, 두 번째 인자는 템플릿에 추가할 정보가 담긴 객체임
-export const home = (req, res) => {
-    res.render("home", { pageTitle : 'Home', videos});
+export const home = async(req, res) => {
+    try{
+        const videos = await Video.find({});
+        res.render("home", { pageTitle : "Home", videos});
+    } catch(error){
+        console.log(error);
+        res.render("home", { pageTitle : "Home", videos: []});
+    }
 };
-export const search = (req, res) => {
+export const search = (req, res) => { 
     const {query : { term : searchingBy }} = req;
     res.render("search", { pageTitle : 'Search', searchingBy, videos});
 };
 
 // Video Router
 export const getUpload = (req, res) => res.render("upload", { pageTitle : 'Upload'});
-export const postUpload = (req, res) => {
+export const postUpload = async(req, res) => {
     const{
-        body:{file, title, description}
+        body: { title, description },
+        file:{ path }
     } = req;
-    res.redirect(routes.videoDetail(111));
+    const newVideo = await Video.create({
+        fileUrl: path,
+        title,
+        description
+    });
+    console.log(newVideo);
+    res.redirect(routes.videoDetail(newVideo.id));
 };
 
 export const videoDetail = (req, res) => res.render("videoDetail", { pageTitle : 'Video Detail'});
